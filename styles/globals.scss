@@ -1,0 +1,43 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+.SlideShowImg {
+  height: 255;
+  display: block;
+  max-width: 400;
+  overflow: hidden;
+  width: 100%;
+}
+
+.bottomnav {
+  border-top: 1px solid #3f51b5;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.MuiBottomNavigationAction-root {
+  min-width: 50px !important;
+  padding: 0 !important;
+}
+.MuiBottomNavigationAction-label {
+  font-weight: 700;
+  font-family: "Times New Roman", Times, serif !important;
+  font-size: 12px !important;
+}
+.MuiBottomNavigationAction-label.Mui-selected {
+  @extend .MuiBottomNavigationAction-label;
+}
