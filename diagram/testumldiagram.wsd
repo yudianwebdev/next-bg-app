@@ -1,12 +1,12 @@
 @startuml tes
 
-title ini contoh ER diagram
+title ini contoh ER diagram v3
 
 ' hide the spot
-hide circle
+
 
 ' avoid problems with angled crows feet
-skinparam linetype ortho
+' skinparam linetype ortho
 
 entity "User" as user {
   *number : id_user <<generated>>
@@ -15,7 +15,7 @@ entity "User" as user {
   text : description
 }
 
-entity "Entity02" as e02 {
+entity "marketplace" as e02 {
   *e2_id : number <<generated>>
   --
   *e1_id : number <<FK>>
