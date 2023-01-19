@@ -38,6 +38,3 @@ a {
   font-family: "Times New Roman", Times, serif !important;
   font-size: 12px !important;
 }
-.MuiBottomNavigationAction-label.Mui-selected {
-  @extend .MuiBottomNavigationAction-label;
-}

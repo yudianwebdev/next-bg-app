@@ -1,11 +1,19 @@
 import { Grid } from "@material-ui/core";
-import React from "react";
+import { useRouter } from "next/router";
+import React, { useEffect } from "react";
 import BottomNav from "./BottomNav";
 function Layout({ children }) {
+  const router = useRouter();
+  const url = router.pathname;
+  const [value, setValue] = React.useState(0);
+
+  console.log("====================================");
+  console.log(url);
+  console.log("====================================");
   return (
     <Grid container>
       <Grid>{children}</Grid>
-      <BottomNav />
+      <BottomNav url={url} />
     </Grid>
   );
 }

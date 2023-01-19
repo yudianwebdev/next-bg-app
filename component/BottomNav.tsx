@@ -1,18 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import RestoreIcon from "@material-ui/icons/Restore";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
+import Router from "next/router";
 
-export default function BottomNav() {
-  const [value, setValue] = React.useState(0);
+export default function BottomNav({ url }) {
+  const [value, setValue] = React.useState(url);
 
   return (
     <BottomNavigation
       value={value}
-      onChange={(event, newValue) => {
-        setValue(newValue);
+      onChange={(event, newValue: string) => {
+        // setValue(newValue);
+        console.log("====================================");
+        console.log(newValue);
+        console.log("====================================");
       }}
       showLabels
       className="bottomnav"
