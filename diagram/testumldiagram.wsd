@@ -8,6 +8,7 @@ title ini contoh ER diagram v3
 ' avoid problems with angled crows feet
 ' skinparam linetype ortho
 
+
 entity "User" as user {
   *number : id_user <<generated>>
   --
