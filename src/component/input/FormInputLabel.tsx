@@ -16,9 +16,15 @@ function FormInpurLabel({
   error,
 }: IInput) {
   return (
-    <div className="flex flex-col gap-[2px]">
-      <div className="px-3">{label}</div>
-      <div className="bg-white px-3 rounded-[12px]">
+    <div className={`${error ? " " : "pb-4 "} flex flex-col  gap-[2px]`}>
+      <div className={`${error ? " text-red-600 " : ""} px-[14px]`}>
+        {label}
+      </div>
+      <div
+        className={`${
+          error ? " border-red-600  " : "border-white  "
+        }bg-white px-3 border-[2px] rounded-[12px]`}
+      >
         <input
           value={value}
           onChange={onChange}
@@ -27,14 +33,12 @@ function FormInpurLabel({
           className="bg-red"
           style={{
             width: "100%",
-            height: "40px",
+            height: "36px",
           }}
           required={required}
         />
       </div>
-      {error && (
-        <div className="px-3 italic text-red-600 text-xs">Allert Error</div>
-      )}
+      <div className="px-[14px] italic text-red-600 text-xs">{error?.[0]}</div>
     </div>
   );
 }

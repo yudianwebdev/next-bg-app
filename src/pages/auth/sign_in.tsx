@@ -3,6 +3,7 @@ import {
   getAuth,
   getIdToken,
   signInWithPopup,
+  signOut,
 } from "firebase/auth";
 import { googleProvider } from "../../config/firebase";
 import { useRouter } from "next/router";
@@ -11,19 +12,23 @@ import APINew from "../../utils/Api";
 import FormInpurLabel from "../../component/input/FormInputLabel";
 import ButtonUniversal from "../../component/button/Button";
 import useInput from "../../utils/useInput";
+import { useState } from "react";
 
-function SignIn() {
+function PageSignIn() {
   const router = useRouter();
   const [input, handleInput] = useInput({
     email: "",
     password: "",
   });
-
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+  });
   function btnLoginGoogle2() {
     const auth = getAuth();
     signInWithPopup(auth, googleProvider).then(async () => {
       const idToken = await getIdToken(auth.currentUser);
-      console.log(idToken);
+      console.log("token firebase ", idToken);
       APINew.post("/auth/google", { id_token: idToken })
         .then((res) => {
           Cookies.set("token", res.access_token);
@@ -69,14 +74,17 @@ function SignIn() {
     console.log("====================================");
     APINew.post("/auth/email", { email: input.email, password: input.password })
       .then((res) => {
+        Cookies.set("token", res?.access_token);
+        router.push("/page2");
         console.log("====================================");
         console.log(res);
         console.log("====================================");
       })
       .catch((err) => {
+        console.log("lah");
+        console.log(err?.errors);
         console.log("====================================");
-        console.log(err);
-        console.log("====================================");
+        setErrors(err.errors);
       });
   }
   return (
@@ -88,6 +96,7 @@ function SignIn() {
           value={input.email}
           onChange={handleInput("email")}
           required={true}
+          error={errors?.email}
         />
         <FormInpurLabel
           label="Password"
@@ -95,20 +104,27 @@ function SignIn() {
           onChange={handleInput("password")}
           value={input.password}
           required
+          error={errors?.password}
         />
         <ButtonUniversal
           onClick={() => btnSignIn()}
           label="Sign In"
           type="block"
         />
-        <ButtonUniversal
+        {/* <ButtonUniversal
           onClick={() => btnLoginGoogle2()}
           label="Sign In With Google"
           type="outline"
         />
+        <ButtonUniversal
+          onClick={() => LOGOUT()}
+          label="lOGOUT"
+          type="outline"
+        /> */}
+        <a href="./sign_up">Sign Up Now</a>
       </div>
     </div>
   );
 }
 
-export default SignIn;
+export default PageSignIn;
