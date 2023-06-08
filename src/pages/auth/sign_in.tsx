@@ -12,7 +12,7 @@ import APINew from "../../utils/Api";
 import FormInpurLabel from "../../component/input/FormInputLabel";
 import ButtonUniversal from "../../component/button/Button";
 import useInput from "../../utils/useInput";
-import { useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 
 function PageSignIn() {
   const router = useRouter();
@@ -24,22 +24,67 @@ function PageSignIn() {
     email: "",
     password: "",
   });
-  function btnLoginGoogle2() {
+
+  async function btnLoginGoogle3() {
     const auth = getAuth();
-    signInWithPopup(auth, googleProvider).then(async () => {
-      const idToken = await getIdToken(auth.currentUser);
-      console.log("token firebase ", idToken);
-      APINew.post("/auth/google", { id_token: idToken })
-        .then((res) => {
-          Cookies.set("token", res.access_token);
-          router.push("/page2");
-        })
-        .catch((err) => {
-          console.log("====================================");
-          console.log(err);
-          console.log("====================================");
-        });
-    });
+    signInWithPopup(auth, googleProvider)
+      .then(async () => {
+        const idToken = await getIdToken(auth.currentUser);
+        console.log("token firebase ", idToken);
+        setTimeout(() => {
+          if (idToken) {
+            APINew.post("/auth/google", { id_token: idToken })
+              .then((res) => {
+                Cookies.set("token", res.access_token);
+                router.push("/page2");
+              })
+              .catch((err) => {
+                console.log("====================================");
+                console.log(err);
+                console.log("====================================");
+              });
+          }
+        }, 7000);
+      })
+      .catch((err) => {
+        console.log("====================================");
+        console.log(err);
+        console.log("====================================");
+      });
+  }
+
+  const [, startTransition] = useTransition();
+  async function btnLoginGoogle2() {
+    const auth = getAuth();
+    // await auth.signOut();
+    signInWithPopup(auth, googleProvider)
+      .then(async (res) => {
+        try {
+          const idToken = await getIdToken(auth?.currentUser);
+          setTimeout(() => {
+            APIGoogle(idToken);
+          }, 7000);
+          const credential = GoogleAuthProvider.credentialFromResult(res);
+          console.log(credential.idToken, idToken);
+        } catch {
+          console.log("token firebase ", res);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+  async function APIGoogle(idToken) {
+    await APINew.post("/auth/google", { id_token: idToken })
+      .then((res) => {
+        Cookies.set("token", res.access_token);
+        router.push("/page2");
+      })
+      .catch((err) => {
+        console.log("====================================");
+        console.log(err);
+        console.log("====================================");
+      });
   }
 
   async function btnLoginGoogle() {
@@ -111,11 +156,12 @@ function PageSignIn() {
           label="Sign In"
           type="block"
         />
-        {/* <ButtonUniversal
+        <ButtonUniversal
           onClick={() => btnLoginGoogle2()}
           label="Sign In With Google"
           type="outline"
         />
+        {/* 
         <ButtonUniversal
           onClick={() => LOGOUT()}
           label="lOGOUT"

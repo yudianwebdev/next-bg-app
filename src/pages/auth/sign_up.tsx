@@ -47,7 +47,7 @@ function PageSignUp() {
           value={input.name}
           onChange={handleInput("name")}
           required={true}
-          error={errors.name}
+          error={errors?.name}
         />
         <FormInpurLabel
           label="Email"
@@ -55,14 +55,14 @@ function PageSignUp() {
           value={input.email}
           onChange={handleInput("email")}
           required={true}
-          error={errors.email}
+          error={errors?.email}
         />
         <FormInpurLabel
           label="Password"
           type="password"
           onChange={handleInput("password")}
           value={input.password}
-          error={errors.password}
+          error={errors?.password}
           required
         />
 
@@ -72,7 +72,7 @@ function PageSignUp() {
           type="block"
         />
 
-        <a href="./sign_ip">Sign In Now</a>
+        <a href="./sign_in">Sign In Now</a>
       </div>
     </div>
   );
