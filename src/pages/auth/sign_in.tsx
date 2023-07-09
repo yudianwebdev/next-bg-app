@@ -31,20 +31,19 @@ function PageSignIn() {
       .then(async () => {
         const idToken = await getIdToken(auth.currentUser);
         console.log("token firebase ", idToken);
-        setTimeout(() => {
-          if (idToken) {
-            APINew.post("/auth/google", { id_token: idToken })
-              .then((res) => {
-                Cookies.set("token", res.access_token);
-                router.push("/page2");
-              })
-              .catch((err) => {
-                console.log("====================================");
-                console.log(err);
-                console.log("====================================");
-              });
-          }
-        }, 7000);
+        // setTimeout(() => {
+        if (idToken) {
+          APINew.post("/auth/google", { id_token: idToken })
+            .then((res) => {
+              Cookies.set("token", res.access_token);
+              router.push("/page2");
+            })
+            .catch((err) => {
+              console.log(err);
+              console.log("====================================");
+            });
+        }
+        // }, 7000);
       })
       .catch((err) => {
         console.log("====================================");
@@ -60,10 +59,10 @@ function PageSignIn() {
     signInWithPopup(auth, googleProvider)
       .then(async (res) => {
         try {
-          const idToken = await getIdToken(auth?.currentUser);
-          setTimeout(() => {
-            APIGoogle(idToken);
-          }, 7000);
+          const idToken = await getIdToken(auth?.currentUser, true);
+          // setTimeout(() => {
+          APIGoogle(idToken);
+          // }, 7000);
           const credential = GoogleAuthProvider.credentialFromResult(res);
           console.log(credential.idToken, idToken);
         } catch {
