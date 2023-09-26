@@ -11,6 +11,10 @@ a {
   text-decoration: none;
 }
 
+*:focus {
+  outline: none;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -38,3 +42,6 @@ a {
   font-family: "Times New Roman", Times, serif !important;
   font-size: 12px !important;
 }
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

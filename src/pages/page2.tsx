@@ -1,6 +1,6 @@
 import React from "react";
-import Layout from "../src/component/Layout";
-import Cardapaini from "../src/component/Cardapaini";
+import Layout from "../component/Layout";
+import Cardapaini from "../component/Cardapaini";
 const page2 = () => {
   return (
     <Layout>
